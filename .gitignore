@@ -1,4 +1,20 @@
 target/
+logs/
+run/
+test_run/
+out/
 
 *.jar
 *.zip
+
+.idea/
+.vscode/
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+.DS_Store
+
