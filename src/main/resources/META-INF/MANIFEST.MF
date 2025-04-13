@@ -1,0 +1,5 @@
+Agent-Class: dim.AgentInjector
+Premain-Class: dim.AgentInjector
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+
