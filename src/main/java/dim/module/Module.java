@@ -5,18 +5,20 @@ import dim.util.game.IMinecraft;
 
 public abstract class Module implements IMinecraft {
 	public final String name, description;
-	public int key = 0;
+	public final Category category;
+	public int key;
 	
 	private boolean enabled;
 	
-	public Module(String name, String description, int key) {
+	public Module(String name, String description, int key, Category category) {
 		this.name = name;
 		this.description = description;
 		this.key = key;
+		this.category = category;
 	}
 	
-	public Module(String name, String description) {
-		this(name, description, 0);
+	public Module(String name, String description, Category category) {
+		this(name, description, 0, category);
 	}
 
 	public void onEnable() {}

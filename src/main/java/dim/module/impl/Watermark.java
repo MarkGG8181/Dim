@@ -2,6 +2,7 @@ package dim.module.impl;
 
 import java.awt.Color;
 
+import dim.module.Category;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -12,7 +13,7 @@ import net.minecraft.client.Minecraft;
 
 public class Watermark extends dim.module.Module {
 	public Watermark() {
-		super("Watermark", "Displays a watermark", Keyboard.KEY_L);
+		super("Watermark", "Displays a watermark", Keyboard.KEY_L, Category.RENDER);
 		setEnabled(true);
 	}
 	

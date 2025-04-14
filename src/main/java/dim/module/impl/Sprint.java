@@ -1,5 +1,6 @@
 package dim.module.impl;
 
+import dim.module.Category;
 import org.lwjgl.input.Keyboard;
 
 import dim.event.impl.UpdateEvent;
@@ -8,7 +9,7 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class Sprint extends dim.module.Module {
 	public Sprint() {
-		super("Sprint", "Sprints automatically", Keyboard.KEY_G);
+		super("Sprint", "Sprints automatically", Keyboard.KEY_G, Category.MOVEMENT);
 	}
 	
 	@Listen
