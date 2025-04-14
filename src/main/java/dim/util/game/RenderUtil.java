@@ -37,6 +37,10 @@ public class RenderUtil {
         color(Color.WHITE);
         GlStateManager.popMatrix();
     }
+
+    public static void rectangle(double x, double y, double width, double height, Color color) {
+        rectangle(x, y, width, height, true, color);
+    }
     
     public static void rectangle(double x, double y, double width, double height, boolean filled, Color color) {
         start();
