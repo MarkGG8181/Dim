@@ -3,16 +3,21 @@ package dim.screen.web;
 import dim.DimClient;
 import dim.module.Category;
 import dim.module.Module;
+import dim.util.client.ColorUtil;
 import fi.iki.elonen.NanoHTTPD;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class WebGUI extends NanoHTTPD {
     private final Logger LOGGER = LogManager.getLogger("WebGUI");
@@ -38,23 +43,42 @@ public class WebGUI extends NanoHTTPD {
             return serveResource("/dim/style.css", "text/css");
         }
 
+        if (uri.equals("/font.otf")) {
+            return serveResource("/dim/font.otf", "font/otf");
+        }
+
         String htmlTemplate = readResource("/dim/index.html");
         if (htmlTemplate == null) return newFixedLengthResponse("Failed to load page");
 
         StringBuilder categoriesHtml = new StringBuilder();
         for (Category cat : Category.values()) {
             StringBuilder modulesHtml = new StringBuilder();
-            for (Module mod : DimClient.INSTANCE.moduleStorage.getFromCategory(cat)) {
-                String enabledClass = mod.isEnabled() ? "enabled" : "";
+            List<Module> modules = new ArrayList<>(DimClient.INSTANCE.moduleStorage.getFromCategory(cat));
+
+            boolean hasModules = !modules.isEmpty();
+
+            for (Module mod : modules) {
+                String style = "";
+                if (mod.isEnabled()) {
+                    Color categoryColor = ColorUtil.getColorFromCategory(cat);
+                    String hexColor = String.format("#%02x%02x%02x", categoryColor.getRed(), categoryColor.getGreen(), categoryColor.getBlue());
+                    style = " style='background-color: " + hexColor + "'";
+                }
                 modulesHtml.append(String.format(
-                        "<div class='module %s' onclick=\"toggleModule('%s')\">%s</div>",
-                        enabledClass, mod.name, mod.name.toLowerCase()
+                        "<div class='module%s' onclick=\"toggleModule('%s')\"%s>%s</div>",
+                        mod.isEnabled() ? " enabled" : "", mod.name, style, mod.name.toLowerCase()
                 ));
             }
+
+            Color categoryColor = ColorUtil.getColorFromCategory(cat);
+            String hexColor = String.format("#%02x%02x%02x", categoryColor.getRed(), categoryColor.getGreen(), categoryColor.getBlue());
+
+            String categoryStyle = "style='border: 2px solid " + hexColor + "'";
+
             categoriesHtml.append(String.format(
-                    "<div class='category'>" +
+                    "<div class='category' %s>" +
                             "<div class='category-header'>%s</div>%s</div>",
-                    cat.name().toLowerCase(), modulesHtml
+                    categoryStyle, cat.name().toLowerCase(), modulesHtml
             ));
         }
 

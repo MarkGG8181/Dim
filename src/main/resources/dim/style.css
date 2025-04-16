@@ -1,41 +1,45 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/font.otf') format('opentype');
+}
+
 body {
-    background-color: #121212;
+    background-color: #282828FF;
     color: #f0f0f0;
-    font-family: sans-serif;
+    font-family: 'CustomFont', sans-serif;
     margin: 0;
-    padding: 10px;
+    padding: 5px;
 }
 
 .container {
     display: flex;
-    gap: 10px;
+    align-items: flex-start; /* Align categories at the top */
 }
 
 .category {
-    background-color: #222;
-    padding: 10px;
     width: 150px;
-    border-radius: 4px;
+    margin: 4px;
+    display: inline-flex; /* Changed to inline-flex */
+    flex-direction: column; /* Stack children vertically */
+    min-height: 0; /* Allow category to shrink */
 }
 
 .category-header {
-    background-color: #333;
+    background-color: #161616FF;
     padding: 5px;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 4px;
-    margin-bottom: 5px;
+    text-align: left;
 }
 
 .module {
     padding: 5px;
-    margin: 3px 0;
-    background-color: #444;
-    border-radius: 4px;
+    background-color: #1B1B1BFF;
     cursor: pointer;
-    text-align: center;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    font-family: 'CustomFont', sans-serif;
 }
 
 .module.enabled {
-    background-color: #3a7c3a;
+    background-color: #1B1B1BFF;
 }
