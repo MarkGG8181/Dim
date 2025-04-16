@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 
 public class ModuleStorage extends Storage<Module> implements IMinecraft {
 
+	public Module currentModule;
+
 	@Override
 	public void init() {
 		super.init();
