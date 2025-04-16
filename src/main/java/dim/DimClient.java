@@ -20,21 +20,19 @@ public class DimClient {
     public static final Logger LOGGER = LogManager.getLogger("Dim");
     
     public final ModuleStorage moduleStorage = new ModuleStorage();
-	public final WebGUI webGUI;
-
-    {
-        try {
-            webGUI = new WebGUI(8080);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	public WebGUI webGUI;
 
     public void start() {
 		LOGGER.info("{} Dim Client...", TYPE == ClientType.INJECTION ? "Injecting" : "Launching");
 		Display.setTitle("Dim 1.8 [" + TYPE.name().toLowerCase() + "]");
 		
 		moduleStorage.init();
+
+		try {
+			webGUI = new WebGUI(8080);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	/**

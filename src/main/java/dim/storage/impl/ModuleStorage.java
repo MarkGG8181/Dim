@@ -26,6 +26,10 @@ public class ModuleStorage extends Storage<Module> implements IMinecraft {
 	public Set<Module> getFromCategory(Category category) {
 		return getHashSet().stream().filter(m -> m.category == category).collect(Collectors.toSet());
 	}
+
+	public Module getModuleByName(String name) {
+		return getHashSet().stream().filter(m -> m.name.equalsIgnoreCase(name)).findFirst().orElse(null);
+	}
 	
 	@Listen
 	public void onKey(KeyEvent event) {

@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Control Panel</title>
+    <title>ClickGUI Web</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<h1>Java Web Controller</h1>
-<p>Current Value: <span id="val">{{value}}</span></p>
-<input type="number" id="inputVal" />
-<button onclick="sendValue()">Update</button>
+<div class="container">
+    {{categoryComponents}}
+</div>
+
 <script>
-    function sendValue() {
-        var val = document.getElementById('inputVal').value;
-        fetch('/', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: 'newValue=' + encodeURIComponent(val)
-        }).then(res => location.reload());
+    function toggleModule(moduleId) {
+        fetch('/toggle?module=' + encodeURIComponent(moduleId))
+            .then(() => location.reload());
     }
 </script>
 </body>

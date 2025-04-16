@@ -1,6 +1,11 @@
 package dim.screen.web;
 
+import dim.DimClient;
+import dim.module.Category;
+import dim.module.Module;
 import fi.iki.elonen.NanoHTTPD;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -10,46 +15,51 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WebGUI extends NanoHTTPD {
-    private int myVariable = 0;
+    private final Logger LOGGER = LogManager.getLogger("WebGUI");
 
     public WebGUI(int port) throws IOException {
         super(port);
         start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
-        System.out.println("Server running at http://localhost:8080/");
+        LOGGER.info("Web ClickGUI running at http://localhost:8080/");
     }
 
     @Override
     public Response serve(IHTTPSession session) {
         String uri = session.getUri();
-        Method method = session.getMethod();
 
-        if (Method.POST.equals(method)) {
-            try {
-                session.parseBody(new HashMap<>());
-            } catch (Exception e) {
-                return newFixedLengthResponse("Error parsing POST data.");
-            }
-
-            Map<String, String> params = session.getParms();
-            if (params.containsKey("newValue")) {
-                try {
-                    myVariable = Integer.parseInt(params.get("newValue"));
-                } catch (NumberFormatException ignored) {}
-            }
-            return newFixedLengthResponse("Value updated.");
+        if (uri.startsWith("/toggle")) {
+            String moduleName = session.getParms().get("module");
+            Module mod = DimClient.INSTANCE.moduleStorage.getModuleByName(moduleName);
+            if (mod != null) mod.setEnabled(!mod.isEnabled());
+            return newFixedLengthResponse("Toggled");
         }
 
         if (uri.equals("/style.css")) {
-            return serveResource("/web/style.css", "text/css");
+            return serveResource("/dim/style.css", "text/css");
         }
 
-        String html = readResource("/web/index.html");
-        if (html != null) {
-            html = html.replace("{{value}}", String.valueOf(myVariable));
-            return newFixedLengthResponse(Response.Status.OK, "text/html", html);
+        String htmlTemplate = readResource("/dim/index.html");
+        if (htmlTemplate == null) return newFixedLengthResponse("Failed to load page");
+
+        StringBuilder categoriesHtml = new StringBuilder();
+        for (Category cat : Category.values()) {
+            StringBuilder modulesHtml = new StringBuilder();
+            for (Module mod : DimClient.INSTANCE.moduleStorage.getFromCategory(cat)) {
+                String enabledClass = mod.isEnabled() ? "enabled" : "";
+                modulesHtml.append(String.format(
+                        "<div class='module %s' onclick=\"toggleModule('%s')\">%s</div>",
+                        enabledClass, mod.name, mod.name.toLowerCase()
+                ));
+            }
+            categoriesHtml.append(String.format(
+                    "<div class='category'>" +
+                            "<div class='category-header'>%s</div>%s</div>",
+                    cat.name().toLowerCase(), modulesHtml
+            ));
         }
 
-        return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "404 Not Found");
+        String finalHtml = htmlTemplate.replace("{{categoryComponents}}", categoriesHtml.toString());
+        return newFixedLengthResponse(Response.Status.OK, "text/html", finalHtml);
     }
 
     private String readResource(String path) {
@@ -68,11 +78,16 @@ public class WebGUI extends NanoHTTPD {
     }
 
     private Response serveResource(String path, String mime) {
-        try (InputStream in = getClass().getResourceAsStream(path)) {
-            if (in == null) return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "404 Not Found");
+        InputStream in = getClass().getResourceAsStream(path);
+        if (in == null) {
+            return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "404 Not Found");
+        }
+
+        try {
             return newFixedLengthResponse(Response.Status.OK, mime, in, in.available());
         } catch (IOException e) {
             return newFixedLengthResponse("Error loading resource.");
         }
     }
+
 }
