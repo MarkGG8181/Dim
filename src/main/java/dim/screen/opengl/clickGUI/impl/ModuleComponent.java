@@ -1,8 +1,8 @@
-package dim.screen.clickGUI.impl;
+package dim.screen.opengl.clickGUI.impl;
 
 import dim.module.Module;
 import dim.screen.Colors;
-import dim.screen.clickGUI.Component;
+import dim.screen.opengl.clickGUI.Component;
 import dim.util.client.ColorUtil;
 import dim.util.game.RenderUtil;
 import dim.util.math.SizeVector2d;

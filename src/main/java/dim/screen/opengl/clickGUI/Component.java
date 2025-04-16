@@ -1,4 +1,4 @@
-package dim.screen.clickGUI;
+package dim.screen.opengl.clickGUI;
 
 import dim.util.game.IMinecraft;
 import dim.util.math.SizeVector2d;

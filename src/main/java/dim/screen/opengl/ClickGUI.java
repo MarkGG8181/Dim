@@ -1,10 +1,7 @@
-package dim.screen;
+package dim.screen.opengl;
 
-import dim.DimClient;
 import dim.module.Category;
-import dim.module.Module;
-import dim.screen.clickGUI.impl.CategoryComponent;
-import dim.screen.clickGUI.impl.ModuleComponent;
+import dim.screen.opengl.clickGUI.impl.CategoryComponent;
 import dim.util.math.SizeVector2d;
 import net.minecraft.client.gui.GuiScreen;
 

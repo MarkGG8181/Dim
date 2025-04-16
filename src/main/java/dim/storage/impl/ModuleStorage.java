@@ -4,13 +4,11 @@ import dim.event.impl.KeyEvent;
 import dim.module.Category;
 import dim.module.Module;
 import dim.module.impl.*;
-import dim.screen.ClickGUI;
+import dim.screen.opengl.ClickGUI;
 import dim.storage.Storage;
 import dim.util.game.IMinecraft;
 import io.github.nevalackin.radbus.Listen;
-import org.lwjgl.input.Keyboard;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
