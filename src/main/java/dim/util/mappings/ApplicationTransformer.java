@@ -54,23 +54,7 @@ public class ApplicationTransformer implements ClassFileTransformer {
 					    LOGGER.info("Injecting into method: {}", startGame);
 					    CtMethod method = ctClass.getDeclaredMethod(startGame);
 					    method.insertAfter("dim.DimClient.INSTANCE.start();");
-				    }
-				    
-				    {
-				    	//runTick
-					    LOGGER.info("Injecting into method: {}", runTick);
-					    CtMethod method = ctClass.getDeclaredMethod(runTick);
-					    method.insertBefore("if (Keyboard.getEventKeyState()) {");
-					    
-					    method.insertAfter("dim.event.impl.KeyEvent keyEv = new dim.event.impl.KeyEvent(n); " +
-	                            "keyEv.post(); " +
-	                            "if (keyEv.cancelled) return; }");
-
-	                    method.insertBefore("if (n == 62 && this.o != null) {");
-	                    method.insertBefore("dim.event.impl.KeyEvent keyEv = new dim.event.impl.KeyEvent(n); " +
-	                            "keyEv.post(); " +
-	                            "if (keyEv.cancelled) return;");
-				    }
+					}
 			    }
 			    
 			    return ctClass.toBytecode();

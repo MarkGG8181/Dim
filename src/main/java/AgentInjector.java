@@ -1,7 +1,6 @@
-package dim;
-
 import java.lang.instrument.Instrumentation;
 
+import dim.DimClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,9 +12,11 @@ public class AgentInjector {
 
 	private static final Logger LOGGER = LogManager.getLogger("Injector");
 
-	public static void premain(String agentArgs, Instrumentation inst) throws Exception {
+	public static void premain(String agentArgs) throws Exception {
 		DimClient.TYPE = ClientType.INJECTION;
 		LOGGER.info("PreMain");
+
+		Instrumentation inst = InstrumentationManager.getInstrumentation();
 
 		String[] classNamesToTransform = { "net.minecraft.client.Minecraft"};
 		
@@ -31,7 +32,7 @@ public class AgentInjector {
         }
 	}
 
-	public static void agentmain(String agentArgs, Instrumentation inst) throws Exception {
+	public static void agentmain(String agentArgs) {
 		LOGGER.info("AgentMain");
 	}
 
