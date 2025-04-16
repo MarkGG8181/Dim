@@ -1,5 +1,6 @@
 package dim;
 
+import dim.screen.web.WebGUI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
@@ -9,6 +10,8 @@ import dim.storage.impl.ModuleStorage;
 import dim.util.ClientType;
 import io.github.nevalackin.radbus.PubSub;
 
+import java.io.IOException;
+
 public class DimClient {
 
 	public static final DimClient INSTANCE = new DimClient();
@@ -17,8 +20,17 @@ public class DimClient {
     public static final Logger LOGGER = LogManager.getLogger("Dim");
     
     public final ModuleStorage moduleStorage = new ModuleStorage();
+	public final WebGUI webGUI;
 
-	public void start() {
+    {
+        try {
+            webGUI = new WebGUI(8080);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void start() {
 		LOGGER.info("{} Dim Client...", TYPE == ClientType.INJECTION ? "Injecting" : "Launching");
 		Display.setTitle("Dim 1.8 [" + TYPE.name().toLowerCase() + "]");
 		

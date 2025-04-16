@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Control Panel</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h1>Java Web Controller</h1>
+<p>Current Value: <span id="val">{{value}}</span></p>
+<input type="number" id="inputVal" />
+<button onclick="sendValue()">Update</button>
+<script>
+    function sendValue() {
+        var val = document.getElementById('inputVal').value;
+        fetch('/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: 'newValue=' + encodeURIComponent(val)
+        }).then(res => location.reload());
+    }
+</script>
+</body>
+</html>
