@@ -8,6 +8,8 @@ import dim.screen.opengl.ClickGUI;
 import dim.storage.Storage;
 import dim.util.game.IMinecraft;
 import io.github.nevalackin.radbus.Listen;
+import net.minecraft.client.gui.GuiChat;
+import org.lwjgl.Sys;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,7 +38,8 @@ public class ModuleStorage extends Storage<Module> implements IMinecraft {
 	@Listen
 	public void onKey(KeyEvent event) {
 		if (event.key == 0x36) {
-			mc.displayGuiScreen(new ClickGUI());
+			mc.displayGuiScreen(new GuiChat());
+			Sys.openURL("http://localhost:8080");
 		}
 
 		getHashSet().forEach(m -> {
