@@ -3,6 +3,9 @@ package dim.module.impl;
 import java.awt.Color;
 
 import dim.module.Category;
+import dim.setting.impl.CheckboxSetting;
+import dim.setting.impl.ModeSetting;
+import dim.setting.impl.SliderSetting;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -12,6 +15,10 @@ import io.github.nevalackin.radbus.Listen;
 import net.minecraft.client.Minecraft;
 
 public class Watermark extends dim.module.Module {
+	public final ModeSetting mode = new ModeSetting("Mode", "adin", "adin", "dva", "tree");
+	public final SliderSetting slider = new SliderSetting("Slider", 2.5, 0, 5, 1);
+	public final CheckboxSetting check = new CheckboxSetting("Check", true);
+
 	public Watermark() {
 		super("Watermark", "Displays a watermark", Keyboard.KEY_L, Category.RENDER);
 		setEnabled(true);

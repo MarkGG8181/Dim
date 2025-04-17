@@ -6,6 +6,7 @@ import dim.util.math.SizeVector2d;
 import net.minecraft.client.gui.GuiScreen;
 
 import javax.vecmath.Vector2d;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +34,14 @@ public class ClickGUI extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        for (CategoryComponent categoryComponent : categories) {
-            categoryComponent.draw(mouseX, mouseY);
-        }
+        categories.forEach(c -> c.draw(mouseX, mouseY));
+
+    }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+        categories.forEach(c -> c.click(mouseX, mouseY, mouseButton));
+
+        super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 }

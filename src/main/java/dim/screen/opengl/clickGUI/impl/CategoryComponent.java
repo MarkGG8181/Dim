@@ -52,5 +52,8 @@ public class CategoryComponent extends Component {
 
     @Override
     public void click(int mouseX, int mouseY, int mouseButton) {
+        for (Component component : children) {
+            component.click(mouseX, mouseY, mouseButton);
+        }
     }
 }

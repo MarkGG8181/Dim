@@ -7,6 +7,7 @@ import dim.setting.Setting;
 import dim.util.client.ColorUtil;
 import dim.util.game.RenderUtil;
 import dim.util.math.SizeVector2d;
+import net.minecraft.client.renderer.entity.Render;
 
 import javax.vecmath.Vector2d;
 import java.util.ArrayList;
@@ -47,5 +48,14 @@ public class ModuleComponent extends Component {
 
     @Override
     public void click(int mouseX, int mouseY, int mouseButton) {
+        if (RenderUtil.hovered(mouseX, mouseY, position.x, position.y, size.width, size.height)) {
+            if (mouseButton == 0) {
+                module.setEnabled(!module.isEnabled());
+            } else {
+                module.setExpanded(!module.isExpanded());
+            }
+        }
+
+        children.forEach(c -> c.click(mouseX, mouseY, mouseButton));
     }
 }

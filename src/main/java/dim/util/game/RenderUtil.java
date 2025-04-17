@@ -38,6 +38,10 @@ public class RenderUtil {
         GlStateManager.popMatrix();
     }
 
+    public static boolean hovered(int mouseX, int mouseY, double x, double y, double width, double height) {
+        return mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+    }
+
     public static void rectangle(double x, double y, double width, double height, Color color) {
         rectangle(x, y, width, height, true, color);
     }

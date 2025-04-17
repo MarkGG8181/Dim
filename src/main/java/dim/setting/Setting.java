@@ -11,13 +11,12 @@ public class Setting<T> {
     private final Module parent;
 
     public Setting(String name, SettingType type, T value) {
-        this.parent = DimClient.INSTANCE.moduleStorage.currentModule;
-
         this.name = name;
         this.type = type;
         this.value = value;
         this.defaultValue = value;
 
+        this.parent = DimClient.INSTANCE.moduleStorage.currentModule;
         this.parent.settings.add(this);
     }
 

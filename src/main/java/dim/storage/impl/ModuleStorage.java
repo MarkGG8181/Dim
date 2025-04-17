@@ -40,6 +40,8 @@ public class ModuleStorage extends Storage<Module> implements IMinecraft {
 		if (event.key == 0x36) {
 			mc.displayGuiScreen(new GuiChat());
 			Sys.openURL("http://localhost:8080");
+		} else if (event.key == 0x9D) {
+			mc.displayGuiScreen(new ClickGUI());
 		}
 
 		getHashSet().forEach(m -> {
