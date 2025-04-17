@@ -12,6 +12,7 @@ import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,8 @@ public class WebGUI extends NanoHTTPD {
     public WebGUI(int port) throws IOException {
         super(port);
         start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
-        LOGGER.info("Web ClickGUI running at http://localhost:8080/");
+        String ip = InetAddress.getLocalHost().getHostAddress();
+        LOGGER.info("Web ClickGUI running at http://" + ip + ":8080/");
     }
 
     @Override
