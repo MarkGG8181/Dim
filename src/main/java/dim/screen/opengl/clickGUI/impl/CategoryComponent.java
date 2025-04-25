@@ -15,7 +15,6 @@ import java.util.List;
 
 public class CategoryComponent extends Component {
     public final Category category;
-    public final List<Component> children = new ArrayList<>();
     public SizeVector2d parentSize = new SizeVector2d(size.width, 15);
 
     public CategoryComponent(Category category, Vector2d position, SizeVector2d size) {
@@ -36,6 +35,11 @@ public class CategoryComponent extends Component {
         double newHeight = 0;
         if (!children.isEmpty()) {
             for (Component component : children) {
+                if (!component.children.isEmpty() && component instanceof ModuleComponent && ((ModuleComponent) component).module.isExpanded()) {
+                    for (Component component1 : component.children) {
+                        newHeight += component1.size.height;
+                    }
+                }
                 newHeight += component.size.height;
             }
         }

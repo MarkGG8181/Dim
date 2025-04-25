@@ -16,7 +16,6 @@ import java.util.List;
 public class ModuleComponent extends Component {
     public final CategoryComponent parent;
     public final Module module;
-    public final List<Component> children = new ArrayList<>();
 
     public ModuleComponent(CategoryComponent parent, Module module, Vector2d position, SizeVector2d size) {
         super(position, size);
