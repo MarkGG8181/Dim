@@ -178,7 +178,7 @@ public class IntegratedServer extends MinecraftServer
     protected boolean startServer() throws IOException
     {
         logger.info("Starting integrated minecraft server version 1.8");
-        this.setOnlineMode(true);
+        this.setOnlineMode(false);
         this.setCanSpawnAnimals(true);
         this.setCanSpawnNPCs(true);
         this.setAllowPvp(true);
