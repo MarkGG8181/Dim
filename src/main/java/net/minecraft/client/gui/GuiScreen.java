@@ -63,10 +63,10 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     public int height;
 
     /** A list of all the buttons in this container. */
-    protected List buttonList = Lists.newArrayList();
+    protected List<GuiButton> buttonList = Lists.newArrayList();
 
     /** A list of all the labels in this container. */
-    protected List labelList = Lists.newArrayList();
+    protected List<GuiLabel> labelList = Lists.newArrayList();
     public boolean allowUserInput;
 
     /** The FontRenderer used by GuiScreen */

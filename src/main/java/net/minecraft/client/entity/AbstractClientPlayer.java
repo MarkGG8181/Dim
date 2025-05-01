@@ -27,7 +27,6 @@ public abstract class AbstractClientPlayer extends EntityPlayer
     private NetworkPlayerInfo field_175157_a;
     private ResourceLocation locationOfCape = null;
     private String nameClear = null;
-    private static final String __OBFID = "CL_00000935";
 
     public AbstractClientPlayer(World worldIn, GameProfile p_i45074_2_)
     {
